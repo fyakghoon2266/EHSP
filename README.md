@@ -3,3 +3,4 @@
 
 之後用build_tool.sh來建立google earth engnine所需要的虛擬環境
 ### source build_tool.sh
+### bash build_tool.sh

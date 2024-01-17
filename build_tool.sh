@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set virtual environment name
-venv_name="venv"
+venv_name=".venv"
 
 # Function to build virtual environment
 build_venv() {
