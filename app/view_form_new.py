@@ -1,8 +1,7 @@
-from flask_wtf import FlaskForm, FileAllowed, FileField, FileRequired
+from flask_wtf import FlaskForm
 from wsgiref.validate import validator
 from app.setting.config import Settings
 import wtforms as wtf
-
 # from class flaskform
 
 class ProductForm(FlaskForm):
@@ -38,9 +37,41 @@ class ProductForm(FlaskForm):
     )
 
     chrisp_bands = wtf.SelectMultipleField(
-        'Environmental Parameters',
+        Settings.bands_introduction,
         choices=Settings.chrisp_bands_list,
         validators=[
             wtf.validators.DataRequired(message=Settings.message)
             ]
+    )
+
+    era5_bands = wtf.SelectMultipleField(
+        Settings.bands_introduction,
+        choices=Settings.era5_bands_list,
+        validators=[
+            wtf.validators.DataRequired(message=Settings.message)
+        ]
+    )
+
+    modis_ndvi_evi = wtf.SelectMultipleField(
+        Settings.bands_introduction,
+        choices=Settings.modis_ndvi_evi_bands_list,
+        validators=[
+            wtf.validators.DataRequired(message=Settings.message)
+        ]
+    )
+
+    modis_lst = wtf.SelectMultipleField(
+        Settings.bands_introduction,
+        choices=Settings.modis_lst_bands_list,
+        validators=[
+            wtf.validators.DataRequired(message=Settings.message)
+        ]
+    )
+
+    modis_nadir = wtf.SelectMultipleField(
+        Settings.bands_introduction,
+        choices=Settings.modis_nadir_bands_list,
+        validators=[
+            wtf.validators.DataRequired(message=Settings.message)
+        ]
     )
