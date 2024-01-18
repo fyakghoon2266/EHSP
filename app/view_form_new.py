@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wsgiref.validate import validator
 from app.setting.config import Settings
+from numpy import str0
 import wtforms as wtf
 # from class flaskform
 
@@ -75,3 +75,16 @@ class ProductForm(FlaskForm):
             wtf.validators.DataRequired(message=Settings.message)
         ]
     )
+
+    shp = wtf.MultipleFileField(
+        Settings.shp_name,
+        validators=[wtf.validators.DataRequired(message=Settings.message)]
+    )
+
+    regional_category = wtf.SelectField(Settings.regional_category, coerce=str0)
+
+    statics = wtf.SelectField(Settings.statistic_name, choices=Settings.statistic_list)
+
+    statics_world_cover = wtf.SelectField(Settings.statistic_name, choices=Settings.statics_world_list)
+
+    submit = wtf.SubmitField('Submit')

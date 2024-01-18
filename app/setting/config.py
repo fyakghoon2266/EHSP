@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     message: str = 'Must choose at least one'
 
     chrisp_bands_list: list = ['precipitation']
+    
     era5_bands_list: list = ['Air_2m_T_C_mean', 
                             'Air_2m_T_C_min', 
                             'Air_2m_T_C_max', 
@@ -37,4 +38,8 @@ class Settings(BaseSettings):
     modis_nadir_bands_list: list = ['NDVI','EVI','SAVI','NDWI_Gao', 'NDWI_Mc', 'MNDWI']
 
     bands_introduction: str = 'Environmental Parameters'
-
+    shp_name: str = 'shp file'
+    regional_category: str = 'Location ID'
+    statistic_name: str = 'Statistics'
+    statistic_list: list = ['MEAN','MAXIMUM', 'MINIMUM', 'MEDIAN', 'STD', 'VARIANCE', 'SUM']
+    statics_world_list: list = ['SUM', 'PERCENTAGE']
