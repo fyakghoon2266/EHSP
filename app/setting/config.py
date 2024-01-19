@@ -43,3 +43,9 @@ class Settings(BaseSettings):
     statistic_name: str = 'Statistics'
     statistic_list: list = ['MEAN','MAXIMUM', 'MINIMUM', 'MEDIAN', 'STD', 'VARIANCE', 'SUM']
     statics_world_list: list = ['SUM', 'PERCENTAGE']
+
+    # account cinfig
+    service_account: str = 'fyakghoon226677@ee-hoolu.iam.gserviceaccount.com'
+    crs: str = 'EPSG:4326'
+
+settings = Settings()
