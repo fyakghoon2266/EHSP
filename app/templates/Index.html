@@ -18,13 +18,13 @@
         </br>
         <h3>
             At current stage, EHSP provides several satellite products listed here.  
-            <a href="{{ url_for('routes.Table') }}" Target="_blank">here</a>
+            <a href="{{ url_for('Table') }}" Target="_blank">here</a>
         </h3>
     </div>
     <form id="Index_Type" method="post" enctype = "multipart/form-data">
-        <p>{{ form.Type.label }} {{ form.Type }}
-            {% if form.Type.errors %}
-                {% for error in form.Type.errors %}
+        <p>{{ form.product_type.label }} {{ form.product_type }}
+            {% if form.product_type.errors %}
+                {% for error in form.product_type.errors %}
                     {{ error }}
                 {% endfor %}
             {% endif %}

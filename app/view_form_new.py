@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from app.setting.config import Settings
+from setting.config import settings
 from numpy import str0
 import wtforms as wtf
 # from class flaskform
@@ -8,83 +8,83 @@ class ProductForm(FlaskForm):
 
     satellite_products = wtf.RadioField(
         '',
-        choices=Settings.satellite_products,
+        choices=settings.satellite_products_list,
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
             ]
     )
 
     product_type = wtf.RadioField(
         'select output format',
-        choices=Settings.product_type,
+        choices=settings.product_type_list,
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
             ]
     )
 
     start_date = wtf.DateField(
         'start Date',
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
         ]
     )
 
     end_date = wtf.DateField(
         'End Date',
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
         ]
     )
 
     chrisp_bands = wtf.SelectMultipleField(
-        Settings.bands_introduction,
-        choices=Settings.chrisp_bands_list,
+        settings.bands_introduction,
+        choices=settings.chrisp_bands_list,
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
             ]
     )
 
     era5_bands = wtf.SelectMultipleField(
-        Settings.bands_introduction,
-        choices=Settings.era5_bands_list,
+        settings.bands_introduction,
+        choices=settings.era5_bands_list,
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
         ]
     )
 
     modis_ndvi_evi = wtf.SelectMultipleField(
-        Settings.bands_introduction,
-        choices=Settings.modis_ndvi_evi_bands_list,
+        settings.bands_introduction,
+        choices=settings.modis_ndvi_evi_bands_list,
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
         ]
     )
 
     modis_lst = wtf.SelectMultipleField(
-        Settings.bands_introduction,
-        choices=Settings.modis_lst_bands_list,
+        settings.bands_introduction,
+        choices=settings.modis_lst_bands_list,
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
         ]
     )
 
     modis_nadir = wtf.SelectMultipleField(
-        Settings.bands_introduction,
-        choices=Settings.modis_nadir_bands_list,
+        settings.bands_introduction,
+        choices=settings.modis_nadir_bands_list,
         validators=[
-            wtf.validators.DataRequired(message=Settings.message)
+            wtf.validators.DataRequired(message=settings.message)
         ]
     )
 
     shp = wtf.MultipleFileField(
-        Settings.shp_name,
-        validators=[wtf.validators.DataRequired(message=Settings.message)]
+        settings.shp_name,
+        validators=[wtf.validators.DataRequired(message=settings.message)]
     )
 
-    regional_category = wtf.SelectField(Settings.regional_category, coerce=str0)
+    regional_category = wtf.SelectField(settings.regional_category, coerce=str0)
 
-    statics = wtf.SelectField(Settings.statistic_name, choices=Settings.statistic_list)
+    statics = wtf.SelectField(settings.statistic_name, choices=settings.statistic_list)
 
-    statics_world_cover = wtf.SelectField(Settings.statistic_name, choices=Settings.statics_world_list)
+    statics_world_cover = wtf.SelectField(settings.statistic_name, choices=settings.statics_world_list)
 
     submit = wtf.SubmitField('Submit')

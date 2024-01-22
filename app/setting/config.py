@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
 
-    satellite_products: list = [
+    satellite_products_list: list = [
             'CHIRSP (Rainfall Estimates from Rain Gauge and Satellite Observations)',
             'EAR5',
             'MODIS NDVI/EVI (16-Days)',
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
             'MODIS Vegetation/Water Index',
             'SRTM Elevation'
         ]
-    product_type: list = [
+    product_type_list: list = [
             'Zonal Statistic (csv structured data)',
             'Raster(tiff structured data)'
         ]
