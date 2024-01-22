@@ -1,7 +1,10 @@
-from flask import Flask, request, redirect, render_template, url_for, Blueprint
-from flask_session import Session
+from flask import Flask, request, redirect, render_template, url_for, Blueprint, session
+# from flask_session import Session
 from view_form_new import ProductForm
 from setting.config import settings
+from setting.utl import str_random
+from routes_new import routes
+
 
 import logging
 import os
@@ -11,27 +14,31 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.secret_key = SECRET_KEY
-app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
-
-routes = Blueprint('routes', __name__)
+# Session(app)
 app.register_blueprint(routes)
 
 
+
 @app.route('/', methods=['GET', 'POST'])
-def index():
+async def index():
 	form = ProductForm()
+
+	if 'user_id' not in session:
+
+		session['user_id'] = str_random()
+	
+		logger.info(session['user_id'])
 
 	if request.method == 'POST':
 
-		if str(form.product_type.data) == str(settings.product_type[0]):
-			return redirect(url_for('zonal_index', form=form))
+		if str(form.product_type.data) == str(settings.product_type_list[0]):
+			return redirect(url_for('routes.zonal_index'))
 
-		elif str(form.product_type.data) == str(settings.product_type[1]):
-			return redirect(url_for('tiff_raster'), form=form)
+		elif str(form.product_type.data) == str(settings.product_type_list[1]):
+			return redirect(url_for('tiff_raster'))
 
 		else:
-			return render_template('/workpool/gee/templates/Index.html', form=form)
+			return logger.error('The system has an error on product_type.')
 
 	return render_template('Index.html', form=form)
 
@@ -40,8 +47,8 @@ def Table():
     form = ProductForm()
     if request.method == 'POST':
 
-        return render_template('Index.html', form=form)
-    return render_template('Table.html', form=form)     
+        return render_template('Index.html')
+    return render_template('Table.html')     
 
 
 if __name__ == '__main__':

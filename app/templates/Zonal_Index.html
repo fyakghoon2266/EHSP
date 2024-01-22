@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product label</title>
-    <form id="Product_label" action ="{{ url_for('routes.Zonal_All') }}" method="post" enctype = "multipart/form-data" onsubmit="return validateForm()">
+    <form id="Product_label" action ="{{ url_for('routes.zonal_all') }}" method="post" enctype = "multipart/form-data" onsubmit="return validateForm()">
         <h2>The Satellite Image Products</h2>
-        <p>{{ form.Product.label }} {{ form.Product }}
-            {% if form.Product.errors %}
-                {% for error in form.Product.errors %}
+        <p>{{ form.product_type.label }} {{ form.product_type }}
+            {% if form.product_type.errors %}
+                {% for error in form.product_type.errors %}
                     {{ error }}
                 {% endfor %}
             {% endif %}

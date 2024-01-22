@@ -8,3 +8,4 @@ Werkzeug==2.2.2
 pydantic==2.5.3
 pydantic-settings==2.1.0
 ipykernel==6.29.0
+flask[async]
