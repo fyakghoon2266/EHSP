@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -84,4 +84,55 @@
 
 <body>
 </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Label</title>
+
+    <!-- External CSS for styling -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- External JavaScript -->
+    <script src="js/script.js"></script>
+
+    <!-- jQuery CDN (for demo purposes, you can replace it with a local copy) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <form id="Product_label" action="{{ url_for('routes.zonal_all') }}" method="post" enctype="multipart/form-data"
+        onsubmit="return validateForm()">
+        <div class="container">
+            <h2>The Satellite Image Products</h2>
+
+            <div class="form-group">
+                <label for="product_type">{{ form.product_type.label }}</label>
+                {{ form.product_type }}
+                {% if form.product_type.errors %}
+                {% for error in form.product_type.errors %}
+                <span class="error">{{ error }}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="upload-section">
+                <h3>Please upload the shapefiles of your study region</h3>
+                <input type="file" name="file" multiple accept="" value="Select Files" class="file-input">
+            </div>
+
+            <div class="submit-btn">
+                {{ form.submit() }}
+            </div>
+        </div>
+    </form>
+</head>
+
+<body>
+</body>
+
 </html>

@@ -5,6 +5,7 @@ from view_form_new import ProductForm
 from setting import utl
 from setting.utl import str_random
 from werkzeug.utils import secure_filename
+from setting.config import settings
 
 import logging
 import os
@@ -18,6 +19,10 @@ routes = Blueprint('routes', __name__)
 def zonal_index():
     form = ProductForm()
 
+    if 'user_id' not in session:
+        session['user_id'] = str_random()
+        logger.info(session['user_id'])
+
     if request.method == 'POST':
         # Form submission is handled here, and request.form is used to obtain form data.
         # ...
@@ -26,7 +31,7 @@ def zonal_index():
 
     return render_template('Zonal_Index.html', form=form)
 
-@routes.route('/zonal_all')
+@routes.route('/zonal_all', methods=['GET', 'POST'])
 def zonal_all():
     form = ProductForm()
 
@@ -39,7 +44,23 @@ def zonal_all():
         file.save(os.path.join(session['user_id'], secure_filename(file.filename)))
 
     if request.method == 'POST':
-        return 
+        
+        if str(form.satellite_products.data) == str(settings.satellite_products_list[0]):
+            return redirect(url_for('routes_zonal.chirsp', form=form))
 
+        elif str(form.satellite_products.data) == str(settings.satellite_products_list[1]):
+            return redirect(url_for('routes_zonal.ear5', form=form))
 
-    return 'Zonal All Page'
+        elif str(form.satellite_products.data) == str(settings.satellite_products_list[2]):
+            return redirect(url_for('routes_zonal.modis_ndvi_evi', form=form))
+
+        elif str(form.satellite_products.data) == str(settings.satellite_products_list[3]):
+            return redirect(url_for('routes_zonal.modis_lst', form=form))
+
+        elif str(form.satellite_products.data) == str(settings.satellite_products_list[4]):
+            return redirect(url_for('routes_zonal.modis_nadir', form=form))
+
+        elif str(form.satellite_products.data) == str(settings.satellite_products_list[5]):
+            return redirect(url_for('routes_zonal.strm_elevation', form=form))
+        
+    return render_template('Zonal_All.html', form=form)

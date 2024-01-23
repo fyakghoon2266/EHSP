@@ -11,7 +11,7 @@ import os
 
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='templates/css')
 SECRET_KEY = os.urandom(32)
 app.secret_key = SECRET_KEY
 # Session(app)
@@ -22,12 +22,6 @@ app.register_blueprint(routes)
 @app.route('/', methods=['GET', 'POST'])
 async def index():
 	form = ProductForm()
-
-	if 'user_id' not in session:
-
-		session['user_id'] = str_random()
-	
-		logger.info(session['user_id'])
 
 	if request.method == 'POST':
 

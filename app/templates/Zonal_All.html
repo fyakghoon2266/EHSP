@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <form id="test" method="post" action ="{{ url_for('routes.Zonal_All') }}" enctype = "multipart/form-data">
+    <form id="test" method="post" action ="{{ url_for('routes.zonal_all') }}" enctype = "multipart/form-data">
         {{ form.csrf_token() }}
-        <p>{{ form.Product.label }} {{ form.Product }}
-            {% if form.Product.errors %}
-                {% for error in form.Product.errors %}
+        <p>{{ form.product_type.label }} {{ form.product_type }}
+            {% if form.product_type.errors %}
+                {% for error in form.product_type.errors %}
                     {{ error }}
                 {% endfor %}
             {% endif %}
