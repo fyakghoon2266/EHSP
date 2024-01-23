@@ -1,0 +1,116 @@
+/* 修改整體背景色，使其為灰色 */
+body {
+    background-color: #f2f2f2; /* 灰色背景 */
+}
+
+/* 修改 "The Satellite Image Products" 的樣式 */
+h2 {
+    color: #3498db; /* 淺藍色 */
+}
+
+/* 修改選項的樣式 */
+label {
+    color: #000000; /* 黑色文字 */
+    margin-bottom: 15px;
+}
+
+/* 選中的樣式 */
+input:checked + label {
+    color: #000000; /* 選中時文字為黑色 */
+}
+
+
+/* 修改白色匡的樣式 */
+form {
+    background-color: #ffffff; /* 灰色背景 */
+    padding: 20px; /* 內間距增加 */
+    border-radius: 10px; /* 圓角邊框 */
+    width: 70%; /* 設定寬度 */
+    margin: 0 auto; /* 使其水平置中 */
+    margin-top: 50px; /* 增加上邊距，使其偏上一點 */
+}
+
+
+.file-upload {
+    margin-top: 20px;
+}
+
+/* 修改選項的樣式 */
+
+/* label {
+    display: block;
+    background-color: #3498db;
+    padding: 15px;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+} */
+
+
+input[type="file"] {
+    display: none;
+}
+
+/* 選中的樣式 */
+input[type="file"]:focus + label {
+    background-color: #2980b9; /* 修改選中的底色 */
+}
+
+/* 提交按鈕樣式 */
+input[type="submit"] {
+    background-color: #2ecc71; /* 修改提交按鈕的背景色 */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #27ae60; /* 滑鼠懸停時的背景色 */
+}
+
+/* 修改 "Select Files" 按鈕樣式 */
+.file-upload label {
+    display: inline-block;
+    background-color: #3498db; /* 淺藍色背景 */
+    color: #ffffff; /* 白色文字 */
+    padding: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border-radius: 5px; /* 圓角邊框 */
+    transition: background-color 0.3s; /* 背景色漸變效果 */
+}
+
+/* 滑鼠移過時的效果 */
+.file-upload label:hover {
+    background-color: #2980b9; /* 移過時深藍色背景 */
+}
+
+/* 隱藏原本的 input[type="file"]，並使其透明度為 0 */
+.file-upload input[type="file"] {
+    display: none;
+    opacity: 0;
+}
+
+/* 修改紅色字體的樣式 */
+.red-text {
+    color: #e74c3c; /* 紅色文字 */
+}
+
+/* 調整段落之間的垂直間距 */
+form p {
+    margin-bottom: 10px;
+}
+
+/* 調整選項與其他按鈕之間的垂直間距 */
+form p + p {
+    margin-top: 20px;
+}
+
+/* 調整選項之間的垂直間距 */
+.file-upload label + label {
+    margin-top: 15px; /* 修改選項之間的垂直距離 */
+}

@@ -12,8 +12,7 @@ import os
 
 logger = logging.getLogger(__name__)
 
-routes = Blueprint('routes', __name__)
-
+routes = Blueprint('routes', __name__, template_folder='templates', static_folder='static')
 
 @routes.route('/zonal_index', methods=['GET', 'POST'])
 def zonal_index():
@@ -40,8 +39,8 @@ def zonal_all():
     else:
         os.makedirs(session['user_id'])
 
-    for file in request.files.getlist('file'):
-        file.save(os.path.join(session['user_id'], secure_filename(file.filename)))
+    # for file in request.files.getlist('file'):
+    #     file.save(os.path.join(session['user_id'], secure_filename(file.filename)))
 
     if request.method == 'POST':
         

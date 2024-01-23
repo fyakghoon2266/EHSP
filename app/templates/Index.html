@@ -8,7 +8,7 @@
     <title>Ecology & Health Sustainable Platform</title>
 
     <!-- External CSS for styling -->
-    <link rel="stylesheet" href='css/style.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -24,7 +24,6 @@
         </div>
         <form id="Index_Type" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="product_type">Choose product type:</label>
                 <div class="options">
                     {{ form.product_type.label }}
                     {{ form.product_type }}

@@ -3,14 +3,6 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
-.container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
 
 h2 {
     color: #333;
@@ -117,4 +109,38 @@ h1 {
     color: #fff; /* White text */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* style.css */
+
+/* Add these styles to remove paragraph spacing for options */
+.options {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Adjust the size and position of the white box */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Increase the size of the white box */
+.options {
+    padding: 20px;
+}
+
+/* Adjust the margin between options */
+.options label {
+    margin-bottom: 10px;
+}
+
+/* Add padding to the submit button */
+.submit-button {
+    padding-top: 15px;
 }

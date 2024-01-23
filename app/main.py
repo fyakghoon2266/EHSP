@@ -11,7 +11,7 @@ import os
 
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__, static_folder='templates/css')
+app = Flask(__name__, static_folder='static')
 SECRET_KEY = os.urandom(32)
 app.secret_key = SECRET_KEY
 # Session(app)

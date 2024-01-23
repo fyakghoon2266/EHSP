@@ -7,9 +7,9 @@
     <title>Document</title>
     <form id="test" method="post" action ="{{ url_for('routes.zonal_all') }}" enctype = "multipart/form-data">
         {{ form.csrf_token() }}
-        <p>{{ form.product_type.label }} {{ form.product_type }}
-            {% if form.product_type.errors %}
-                {% for error in form.product_type.errors %}
+        <p>{{ form.satellite_products.label }} {{ form.satellite_products }}
+            {% if form.satellite_products.errors %}
+                {% for error in form.satellite_products.errors %}
                     {{ error }}
                 {% endfor %}
             {% endif %}

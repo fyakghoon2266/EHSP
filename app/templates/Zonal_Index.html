@@ -1,92 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product label</title>
-    <form id="Product_label" action ="{{ url_for('routes.zonal_all') }}" method="post" enctype = "multipart/form-data" onsubmit="return validateForm()">
-        <h2>The Satellite Image Products</h2>
-        <p>{{ form.product_type.label }} {{ form.product_type }}
-            {% if form.product_type.errors %}
-                {% for error in form.product_type.errors %}
-                    {{ error }}
-                {% endfor %}
-            {% endif %}
-        </p>
-    </br>
-        <h3>Please upload the shapfiles of your study region (The *.shp, *.dbf, and *shx files are required for uploaded shapfiles)</h3>
-        <input type="file" name="file" multiple accept="" value="Select Files">
-        <script>
-            var fileInput = document.querySelector("input[type=file]");
-            fileInput.onchange = function () {
-                var input = document.querySelector("input[name='file']");
-            var files = input.files;
-            var requiredExtensions = [".shp", ".dbf", ".shx"];
-            var requiredFileCount = requiredExtensions.length;
-            var foundFileCount = 0;
-
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var fileName = file.name;
-                var fileSize = file.size;
-                var fileExtension = fileName.substr(fileName.lastIndexOf("."));
-
-                if (requiredExtensions.includes(fileExtension)) {
-                    foundFileCount++;
-                    if (fileSize > 100 * 1024 * 1024) {
-                        alert("The maximum supported file sizes are 5 MB. " + fileName + " exceed the size limit.");
-                        fileInput.value = "";
-                        return;
-                    }
-                }
-            }
-
-            if (foundFileCount < requiredFileCount) {
-                alert("The *.shp, *.dbf, and *shx files are required for uploaded shapfiles");
-                fileInput.value = "";
-                return;
-            }
-
-            document.getElementById("Product_label").submit();
-                    };
-        </script>
-        <script>
-            function validateForm() {
-              var fileInput = document.querySelector("input[type=file]");
-              var files = fileInput.files;
-              var requiredExtensions = [".shp", ".dbf", ".shx"];
-              var requiredFileCount = requiredExtensions.length;
-              var foundFileCount = 0;
-          
-              for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var fileName = file.name;
-                var fileExtension = fileName.substr(fileName.lastIndexOf("."));
-          
-                if (requiredExtensions.includes(fileExtension)) {
-                  foundFileCount++;
-                }
-              }
-          
-              if (foundFileCount < requiredFileCount) {
-                alert("The *.shp, *.dbf, and *shx files are required for uploaded shapfiles");
-                return false;
-              }
-          
-              return true;
-            }
-          </script>
-        
-        <p>{{ form.submit() }}</p>
-    </form>
-</head>
-
-<body>
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -94,45 +5,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Label</title>
+    <title>Product label</title>
 
     <!-- External CSS for styling -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('routes.static', filename='css/zonal.css') }}">
 
-    <!-- External JavaScript -->
-    <script src="js/script.js"></script>
-
-    <!-- jQuery CDN (for demo purposes, you can replace it with a local copy) -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <form id="Product_label" action="{{ url_for('routes.zonal_all') }}" method="post" enctype="multipart/form-data"
-        onsubmit="return validateForm()">
-        <div class="container">
-            <h2>The Satellite Image Products</h2>
-
-            <div class="form-group">
-                <label for="product_type">{{ form.product_type.label }}</label>
-                {{ form.product_type }}
-                {% if form.product_type.errors %}
-                {% for error in form.product_type.errors %}
-                <span class="error">{{ error }}</span>
-                {% endfor %}
-                {% endif %}
-            </div>
-
-            <div class="upload-section">
-                <h3>Please upload the shapefiles of your study region</h3>
-                <input type="file" name="file" multiple accept="" value="Select Files" class="file-input">
-            </div>
-
-            <div class="submit-btn">
-                {{ form.submit() }}
-            </div>
-        </div>
-    </form>
+    <!-- External JavaScript file -->
+    <script src="{{ url_for('routes.static', filename='js/script.js') }}" defer></script>
 </head>
 
 <body>
+    <form id="Product_label" action="{{ url_for('routes.zonal_all') }}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <h2>The Satellite Image Products</h2>
+        <p>{{ form.satellite_products.label }} {{ form.satellite_products }}
+            {% if form.satellite_products.errors %}
+                {% for error in form.satellite_products.errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endif %}
+        </p>
+        <!-- 移除 <br> 標籤 -->
+        <p class="red-text">Please upload the shapefiles of your study region (The *.shp, *.dbf, and *shx files are required for uploaded shapefiles)</p>
+        <div class="file-upload">
+            <label for="file">Select Files</label>
+            <input type="file" id="file" name="file" multiple accept="" value="Select Files">
+        </div>
+
+        <!-- Submit button moved inside the form -->
+        <p>{{ form.submit() }}</p>
+    </form>
 </body>
 
 </html>
