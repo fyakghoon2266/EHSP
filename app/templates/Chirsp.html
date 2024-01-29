@@ -24,21 +24,21 @@
     <form method="POST" action="{{ url_for('routes.Model_Chirsp') }}" enctype=multipart/form-data onsubmit="showLoading()">
         <h2>Environmental Parameters        </h2>
         {{ form.hidden_tag() }}
-        <p>{{ form.Bands_Chirps.label }} {{ form.Bands_Chirps }}
-            {% if form.Bands_Chirps.errors %}
-                {% for error in form.Bands_Chirps.errors %}
+        <p>{{ form.chrisp_bands.label }} {{ form.chrisp_bands }}
+            {% if form.chrisp_bands.errors %}
+                {% for error in form.chrisp_bands.errors %}
                     {{ error }}
                 {% endfor %}
             {% endif %}
         </p>
     </br>
-        <p>{{ form.Star_Date.label }} {{ form.Star_Date }}</p>
+        <p>{{ form.start_date.label }} {{ form.start_date }}</p>
     </br>
-        <p>{{ form.End_Date.label }} {{ form.End_Date }}</p>
+        <p>{{ form.end_date.label }} {{ form.end_date }}</p>
     </br>
-        <p>{{ form.Statics.label }} {{ form.Statics }}</p>
+        <p>{{ form.statics.label }} {{ form.statics }}</p>
     </br>
-        <p>{{ form.Regional_category.label }} {{ form.Regional_category }}</p>
+        <p>{{ form.regional_category.label }} {{ form.regional_category }}</p>
     </br>
     <button type="submit" data-toggle="modal" data-target="#loadingModal">Submit</button>
 </form>

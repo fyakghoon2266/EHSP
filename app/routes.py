@@ -79,11 +79,13 @@ def Zonal_All():
 
 @routes.route('/Chirsp', methods=['GET', 'POST'])
 def Chirsp():
+    
     # read from table
     form = ProductForm(request.form)
 
     #read shpfile 
     shp = shapefile.Reader("".join(glob.glob(os.path.join(session['user_id'],'*.shp'))))
+
     # read shapfile label
     shp_filed = []
 
@@ -93,7 +95,8 @@ def Chirsp():
 
     form.Regional_category.choices = shp_filed
 
-    #  flask_wtf類中提供判斷是否表單提交過來的method，不需要自行利用request.method來做判斷
+    #  The flask_wtf class provides a method for judging whether the form has been submitted. 
+    #  You do not need to use request.method to make the judgment yourself.
     if form.validate_on_submit():
 
         return redirect(url_for('routes.Model_Chirsp', form=form))

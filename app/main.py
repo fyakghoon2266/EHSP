@@ -1,27 +1,39 @@
-from flask import Flask, request, redirect, render_template, url_for, Blueprint, session
+from flask import Flask, request, redirect, render_template, url_for, session
 # from flask_session import Session
 from view_form_new import ProductForm
 from setting.config import settings
-from setting.utl import str_random
 from routes_new import routes
 
-
+import uuid
 import logging
 import os
 
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='static')
+
+# Create the result folder if it doesn't exist
+result_folder = os.path.join(os.getcwd(), 'result')
+if not os.path.exists(result_folder):
+    os.makedirs(result_folder)
+
 SECRET_KEY = os.urandom(32)
 app.secret_key = SECRET_KEY
 # Session(app)
 app.register_blueprint(routes)
 
 
-
 @app.route('/', methods=['GET', 'POST'])
 async def index():
 	form = ProductForm()
+
+	# Create a unique user folder for each session
+	session['user_id'] = str(uuid.uuid4())
+	user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
+	absolute_user_folder = os.path.abspath(user_folder)
+	print(absolute_user_folder)
+	
+	os.makedirs(absolute_user_folder)
 
 	if request.method == 'POST':
 
@@ -43,6 +55,13 @@ def Table():
 
         return render_template('Index.html')
     return render_template('Table.html')     
+
+# @app.teardown_request
+# def teardown_request(exception=None):
+#     # Clean up resources or perform actions when the request ends
+#     user_folder = os.path.join(result_folder, 'user_data', session.get('user_id', ''))
+#     if os.path.exists(user_folder):
+#         shutil.rmtree(user_folder)
 
 
 if __name__ == '__main__':

@@ -1,17 +1,8 @@
 from random import Random
 from datetime import timedelta, datetime
 
+import shapefile
 import logging
-
-# path function that generates random numbers
-def str_random():
-    str = ''
-    chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
-    length = len(chars) - 1
-    random = Random()
-    for i in range(20):
-        str+=chars[random.randint(0,length)]
-    return str
 
 
 def last_day_of_month(any_day):
@@ -66,3 +57,9 @@ def date_format_concersion(date, output_format='%Y/%m/%d'):
     output_date = parsed_date.strftime(output_format)
 
     return output_date
+
+
+def get_shapefile_fields(shapefile_path):
+    shp = shapefile.Reader(shapefile_path)
+    shp_fields = [field[0] for field in shp.fields[1:]]  # Skip the first field, which is typically 'DeletionFlag'
+    return shp_fields

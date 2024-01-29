@@ -1,11 +1,8 @@
-from flask import render_template, request, redirect, url_for, session, Blueprint, send_file
-from random import Random
-from datetime import timedelta, datetime
+from flask import render_template, request, redirect, url_for, session, Blueprint
 from view_form_new import ProductForm
-from setting import utl
-from setting.utl import str_random
 from werkzeug.utils import secure_filename
 from setting.config import settings
+from product import routes_product
 
 import logging
 import os
@@ -14,13 +11,12 @@ logger = logging.getLogger(__name__)
 
 routes = Blueprint('routes', __name__, template_folder='templates', static_folder='static')
 
+routes.register_blueprint(routes_product)
+
+
 @routes.route('/zonal_index', methods=['GET', 'POST'])
 def zonal_index():
-    form = ProductForm()
-
-    if 'user_id' not in session:
-        session['user_id'] = str_random()
-        logger.info(session['user_id'])
+    form = ProductForm(request.form)
 
     if request.method == 'POST':
         # Form submission is handled here, and request.form is used to obtain form data.
@@ -32,34 +28,33 @@ def zonal_index():
 
 @routes.route('/zonal_all', methods=['GET', 'POST'])
 def zonal_all():
-    form = ProductForm()
+    form = ProductForm(request.form)
 
-    if os.path.isdir(session['user_id']) == True:
-        logger.info(f"User {session['user_id']} folder already exists")
-    else:
-        os.makedirs(session['user_id'])
+    files = request.files.getlist('file')
+    result_folder = os.path.join(os.getcwd(), 'result')
+    user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
 
-    # for file in request.files.getlist('file'):
-    #     file.save(os.path.join(session['user_id'], secure_filename(file.filename)))
+    for file in files:
+        file.save(os.path.join(user_folder, secure_filename(file.filename)))
 
     if request.method == 'POST':
         
         if str(form.satellite_products.data) == str(settings.satellite_products_list[0]):
-            return redirect(url_for('routes_zonal.chirsp', form=form))
+            return redirect(url_for('routes.routes_product.chirsp', form=form))
 
         elif str(form.satellite_products.data) == str(settings.satellite_products_list[1]):
-            return redirect(url_for('routes_zonal.ear5', form=form))
+            return redirect(url_for('routes_product.ear5', form=form))
 
         elif str(form.satellite_products.data) == str(settings.satellite_products_list[2]):
-            return redirect(url_for('routes_zonal.modis_ndvi_evi', form=form))
+            return redirect(url_for('routes_product.modis_ndvi_evi', form=form))
 
         elif str(form.satellite_products.data) == str(settings.satellite_products_list[3]):
-            return redirect(url_for('routes_zonal.modis_lst', form=form))
+            return redirect(url_for('routes_product.modis_lst', form=form))
 
         elif str(form.satellite_products.data) == str(settings.satellite_products_list[4]):
-            return redirect(url_for('routes_zonal.modis_nadir', form=form))
+            return redirect(url_for('routes_product.modis_nadir', form=form))
 
         elif str(form.satellite_products.data) == str(settings.satellite_products_list[5]):
-            return redirect(url_for('routes_zonal.strm_elevation', form=form))
+            return redirect(url_for('routes_product.strm_elevation', form=form))
         
-    return render_template('Zonal_All.html', form=form)
+    return render_template('Zonal_Index.html', form=form)
