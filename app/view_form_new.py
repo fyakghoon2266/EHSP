@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from setting.config import settings
 from numpy import str0
 import wtforms as wtf
+
 # from class flaskform
 
 class ProductForm(FlaskForm):

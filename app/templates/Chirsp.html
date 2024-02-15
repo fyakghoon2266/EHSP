@@ -1,97 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<body>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecology & Health Sustainable Platform</title>
+
+    <!-- External CSS for styling -->
+    <link rel="stylesheet" href="{{ url_for('routes.routes_product.static', filename='css/product.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- External JavaScript files -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Chirsp</title>
-    <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-backdrop="static">
+    <script src="{{ url_for('routes.routes_product.static', filename='js/common.js') }}"></script>
+</head>
+
+<body>
+    <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+        aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" id="loadingModalLabel">Please Wait</h4>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="loadingModalLabel">Please Wait</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Loading...</p>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>Loading...</p>
-            </div>
-          </div>
         </div>
     </div>
-    <form method="POST" action="{{ url_for('routes.Model_Chirsp') }}" enctype=multipart/form-data onsubmit="showLoading()">
-        <h2>Environmental Parameters        </h2>
-        {{ form.hidden_tag() }}
-        <p>{{ form.chrisp_bands.label }} {{ form.chrisp_bands }}
-            {% if form.chrisp_bands.errors %}
-                {% for error in form.chrisp_bands.errors %}
-                    {{ error }}
-                {% endfor %}
-            {% endif %}
-        </p>
-    </br>
-        <p>{{ form.start_date.label }} {{ form.start_date }}</p>
-    </br>
-        <p>{{ form.end_date.label }} {{ form.end_date }}</p>
-    </br>
-        <p>{{ form.statics.label }} {{ form.statics }}</p>
-    </br>
-        <p>{{ form.regional_category.label }} {{ form.regional_category }}</p>
-    </br>
-    <button type="submit" data-toggle="modal" data-target="#loadingModal">Submit</button>
-</form>
-    <script>
-        $(document).ready(function() {
-          $('#loadingModal').on('hidden.bs.modal', function () {
-            // Code to display result here
-          });
-        
-          $('form').submit(function() {
-            $('#loadingModal').modal('show');
-          });
-        });
-        
-        $(document).ready(function() {
-          var interval = setInterval(function() {
-            var cookies = document.cookie.split(';');
-            var found = false;
-            for (var i = 0; i < cookies.length; i++) {
-              if (cookies[i].indexOf('fileDownload=true') !== -1) {
-                found = true;
-                break;
-              }
-            }
-            if (found) {
-              clearInterval(interval);
-              $('#loadingModal').modal('hide');
-            }
-          }, 1000);
-        });
-    </script>
-    </br>
-    </br>
-    </br>
-    </br>
-    <style>
-        .danger {
-            background-color: #ffdddd;
-            border-left: 6px solid #f44336;
-        }
-    </style>
+
+    <div class="background-gray">
+        <div class="container">
+            <form id="productForm" method="POST" action="{{ url_for('routes.routes_product.routes_model.model_chirsp') }}"
+                enctype="multipart/form-data" onsubmit="showLoading()">
+                <h2 class="blue-text">Environmental Parameters</h2>
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="chrisp_bands">{{ form.chrisp_bands.label }}</label>
+                    {{ form.chrisp_bands }}
+                    {% if form.chrisp_bands.errors %}
+                        {% for error in form.chrisp_bands.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="start_date">{{ form.start_date.label }}</label>
+                    {{ form.start_date }}
+                </div>
+                <div class="form-group">
+                    <label for="end_date">{{ form.end_date.label }}</label>
+                    {{ form.end_date }}
+                </div>
+                <div class="form-group">
+                    <label for="statics">{{ form.statics.label }}</label>
+                    {{ form.statics }}
+                </div>
+                <div class="form-group">
+                    <label for="regional_category">{{ form.regional_category.label }}</label>
+                    {{ form.regional_category }}
+                </div>
+                <button type="submit" data-toggle="modal" data-target="#loadingModal">Submit</button>
+            </form>
+        </div>
+    </div>
+
     <div class="danger">
         <p>
-            <strong>Notice:</strong> 
-        </br>    
-        1. Start Date & End Date: Users need to check the availability of selected satellite images during your study period. Error message will be pop-up if the user selects inappropriate start and end date.
-        </br>
-        2. Location ID: This column is used for zonal statistics. Each administration boundary should be assigned one unique ID.
+            <strong>Notice:</strong><br>
+            1. Start Date & End Date: Users need to check the availability of selected satellite images during your
+            study period. Error message will be pop-up if the user selects inappropriate start and end date.<br>
+            2. Location ID: This column is used for zonal statistics. Each administration boundary should be assigned one
+            unique ID.
         </p>
     </div>
-    
+
 </body>
 
-</head>
-    
 </html>

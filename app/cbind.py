@@ -3,10 +3,10 @@ import pandas as pd
 import glob
 import os
 
-def cbind_chirsp(statics):
+def cbind_chirsp(statics, files_folder):
 
-    all_files = glob.glob(os.path.join(session['user_id'],"Prec_{}*.csv".format(statics)))
-
+    all_files = glob.glob(os.path.join(files_folder, "Prec_{}*.csv".format(statics)))
+    
     df_from_each_file = (pd.read_csv(f, sep = ",") for f in all_files)
     df_merged = pd.concat(df_from_each_file, ignore_index = True)
     if 'precipitation' in df_merged.columns.tolist():
@@ -14,13 +14,14 @@ def cbind_chirsp(statics):
     else:
         pass
 
-    df_merged.to_csv(session['user_id'] + '/final.csv', index=False)
+    df_merged.to_csv(files_folder + '/final.csv', index=False)
 
 def cbind_era5(statics):
 
-    all_files = glob.glob(os.path.join(session['user_id'],"era5_{}*.csv".format(statics)))
+    result_folder = os.path.join(os.getcwd(), 'result')
+    user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
 
-    df_from_each_file = (pd.read_csv(f, sep = ",") for f in all_files)
+    df_from_each_file = (pd.read_csv(f, sep = ",") for f in user_folder)
     df_merged = pd.concat(df_from_each_file, ignore_index = True)
     if 'Air_2m_T_C_mean' in df_merged.columns.tolist():
         df_merged.rename(columns={'Air_2m_T_C_mean' : 'Air_2m_T_C_mean_' + str(statics)}, inplace = True)

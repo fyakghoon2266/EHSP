@@ -2,10 +2,11 @@ from flask import render_template, request, redirect, url_for, session, Blueprin
 from view_form_new import ProductForm
 from werkzeug.utils import secure_filename
 from setting.config import settings
-from product import routes_product
+from product_routes import routes_product
 
 import logging
 import os
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,14 @@ routes.register_blueprint(routes_product)
 @routes.route('/zonal_index', methods=['GET', 'POST'])
 def zonal_index():
     form = ProductForm(request.form)
+
+    # Create a unique user folder for each session
+    session['user_id'] = str(uuid.uuid4())
+    result_folder = os.path.join(os.getcwd(), 'result')
+    user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
+    absolute_user_folder = os.path.abspath(user_folder)
+	
+    os.makedirs(absolute_user_folder)
 
     if request.method == 'POST':
         # Form submission is handled here, and request.form is used to obtain form data.

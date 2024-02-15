@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, render_template, url_for, session
-# from flask_session import Session
+from flask_session import Session
 from view_form_new import ProductForm
 from setting.config import settings
 from routes_new import routes
@@ -11,7 +11,9 @@ import os
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='static')
-
+app.config['SECRET_KEY'] = str(uuid.uuid4())
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 # Create the result folder if it doesn't exist
 result_folder = os.path.join(os.getcwd(), 'result')
 if not os.path.exists(result_folder):
@@ -27,13 +29,6 @@ app.register_blueprint(routes)
 async def index():
 	form = ProductForm()
 
-	# Create a unique user folder for each session
-	session['user_id'] = str(uuid.uuid4())
-	user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
-	absolute_user_folder = os.path.abspath(user_folder)
-	print(absolute_user_folder)
-	
-	os.makedirs(absolute_user_folder)
 
 	if request.method == 'POST':
 
