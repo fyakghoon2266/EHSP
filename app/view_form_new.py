@@ -9,7 +9,7 @@ class ProductForm(FlaskForm):
 
     satellite_products = wtf.RadioField(
         '',
-        choices=settings.satellite_products_list,
+        choices=list(settings.satellite_products_list.keys()),
         validators=[
             wtf.validators.DataRequired(message=settings.message)
             ]

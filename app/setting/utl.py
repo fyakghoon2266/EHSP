@@ -5,7 +5,7 @@ import shapefile
 import logging
 
 
-def last_day_of_month(any_day):
+def _last_day_of_month(any_day):
     next_month = any_day.replace(day=28) + timedelta(days=4)  # this will never fail
     return next_month - timedelta(days=next_month.day)
 
@@ -22,7 +22,7 @@ def monthlist(begin,end):
             next_month = begin.replace(month=begin.month+1, day=1)
         if next_month > end:
             break
-        result.append ([begin.strftime("%Y-%m-%d"),last_day_of_month(begin).strftime("%Y-%m-%d")])
+        result.append ([begin.strftime("%Y-%m-%d"),_last_day_of_month(begin).strftime("%Y-%m-%d")])
         begin = next_month
     result.append ([begin.strftime("%Y-%m-%d"),end.strftime("%Y-%m-%d")])
     return result
@@ -61,5 +61,7 @@ def date_format_concersion(date, output_format='%Y/%m/%d'):
 
 def get_shapefile_fields(shapefile_path):
     shp = shapefile.Reader(shapefile_path)
-    shp_fields = [field[0] for field in shp.fields[1:]]  # Skip the first field, which is typically 'DeletionFlag'
+
+    # Skip the first field, which is typically 'DeletionFlag'
+    shp_fields = [field[0] for field in shp.fields[1:]]
     return shp_fields

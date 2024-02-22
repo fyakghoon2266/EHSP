@@ -1,15 +1,16 @@
 from pydantic_settings import BaseSettings
+from typing import Dict, List
 
 class Settings(BaseSettings):
 
-    satellite_products_list: list = [
-            'CHIRSP (Rainfall Estimates from Rain Gauge and Satellite Observations)',
-            'EAR5',
-            'MODIS NDVI/EVI (16-Days)',
-            'MODIS Land Surface Temperature',
-            'MODIS Vegetation/Water Index',
-            'SRTM Elevation'
-        ]
+    satellite_products_list: Dict[str, str] = {
+            'CHIRSP (Rainfall Estimates from Rain Gauge and Satellite Observations)': 'chirsp',
+            'EAR5': 'ear5',
+            'MODIS NDVI/EVI (16-Days)': 'modis_ndvi_evi',
+            'MODIS Land Surface Temperature': 'modis_lst',
+            'MODIS Vegetation/Water Index': 'modis_nadir',
+            'SRTM Elevation': 'strm_elevation'
+    }
     product_type_list: list = [
             'Zonal Statistic (csv structured data)',
             'Raster(tiff structured data)'
@@ -46,6 +47,7 @@ class Settings(BaseSettings):
 
     # account cinfig
     service_account: str = 'fyakghoon226677@ee-hoolu.iam.gserviceaccount.com'
+    service_json: str = 'ee-hoolu-0ef4b688458f.json'
     crs: str = 'EPSG:4326'
 
 settings = Settings()

@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, url_for, session
+from flask import Flask, request, redirect, render_template, url_for
 from flask_session import Session
 from view_form_new import ProductForm
 from setting.config import settings
@@ -28,7 +28,6 @@ app.register_blueprint(routes)
 @app.route('/', methods=['GET', 'POST'])
 async def index():
 	form = ProductForm()
-
 
 	if request.method == 'POST':
 

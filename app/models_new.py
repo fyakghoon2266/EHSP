@@ -2,7 +2,7 @@ from flask import session, request, Blueprint
 from view_form_new import ProductForm
 from setting.config import settings
 from datetime import timedelta, datetime
-from setting.utl import last_day_of_month, monthlist, date_format_concersion
+from setting.utl import monthlist, date_format_concersion
 
 import cbind as bd
 import pandas as pd
@@ -21,8 +21,8 @@ def zonal_Chirsp():
     form = ProductForm(request.form)
     
     # star the google earth engine
-    service_account = 'fyakghoon226677@ee-hoolu.iam.gserviceaccount.com'
-    credentials = ee.ServiceAccountCredentials(service_account, 'ee-hoolu-0ef4b688458f.json')
+    service_account = settings.service_account
+    credentials = ee.ServiceAccountCredentials(service_account, settings.service_json)
     
     # google earth engine initialization
     ee.Initialize(credentials)
@@ -37,8 +37,8 @@ def zonal_Chirsp():
 
     for i in range(0, len(time_list)):
         Chirsp = ee.ImageCollection('UCSB-CHG/CHIRPS/DAILY') \
-                .filter(ee.Filter.date(datetime.strptime(time_list[i][0], "%Y-%m-%d"), datetime.strptime(time_list[i][1],"%Y-%m-%d")+ timedelta(days=1))) \
-                .map(lambda img: img.select(list(form.chrisp_bands.data))) \
+                .filter(ee.Filter.date(datetime.strptime(time_list[i][0], "%Y-%m-%d"), datetime.strptime(time_list[i][1],"%Y-%m-%d")+timedelta(days=1))) \
+                .map(lambda image: image.select(list(form.chrisp_bands.data))) \
                 .map(lambda image: image.clip(states)) \
                 .map(lambda image: image.reproject(crs=settings.crs))
 
@@ -62,7 +62,6 @@ def zonal_Chirsp():
             df[form.regional_category.data] = data_temp.loc[:,[form.regional_category.data]]
             df['Date'] = date_format_concersion(time_list[i][0], output_format='%Y/%m/%d')
             df['Doy'] = datetime.strptime(time_list[i][0], '%Y-%m-%d').strftime('%j')
-            print(form.statics.data)
             select_columns = ['Date', 'Doy'] + [item.lower() for item in [form.statics.data]] + [form.regional_category.data]
             df = df[select_columns]
             new_columns = ['Date', 'Doy'] + form.chrisp_bands.data + [form.regional_category.data]
