@@ -1,7 +1,13 @@
 from flask import session
+from setting.config import settings
 import pandas as pd
 import glob
 import os
+
+
+def _rename_columns(df, column_name, suffix):
+    if column_name in df.columns:
+        df.rename(columns={column_name: f"{column_name}_{suffix}"}, inplace=True)
 
 def cbind_chirsp(statics, files_folder):
 
@@ -16,71 +22,21 @@ def cbind_chirsp(statics, files_folder):
 
     df_merged.to_csv(files_folder + '/final.csv', index=False)
 
-def cbind_era5(statics):
 
+def cbind_era5(statics):
     result_folder = os.path.join(os.getcwd(), 'result')
     user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
 
-    df_from_each_file = (pd.read_csv(f, sep = ",") for f in user_folder)
+    all_files = glob.glob(os.path.join(user_folder, "Era5_{}*.csv".format(statics)))
+    
+    df_from_each_file = (pd.read_csv(f, sep = ",") for f in all_files)
     df_merged = pd.concat(df_from_each_file, ignore_index = True)
-    if 'Air_2m_T_C_mean' in df_merged.columns.tolist():
-        df_merged.rename(columns={'Air_2m_T_C_mean' : 'Air_2m_T_C_mean_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'Air_2m_T_C_min' in df_merged.columns.tolist():
-        df_merged.rename(columns={'Air_2m_T_C_min' : 'Air_2m_T_C_min_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'Air_2m_T_C_max' in df_merged.columns.tolist():
-        df_merged.rename(columns={'Air_2m_T_C_max' : 'Air_2m_T_C_max_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'dewpoint_2m_C' in df_merged.columns.tolist():
-        df_merged.rename(columns={'dewpoint_2m_C' : 'dewpoint_2m_C_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'RH' in df_merged.columns.tolist():
-        df_merged.rename(columns={'RH' : 'RH_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'mean_2m_air_temperature' in df_merged.columns.tolist():
-        df_merged.rename(columns={'mean_2m_air_temperature' : 'mean_2m_air_temperature_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'minimum_2m_air_temperature' in df_merged.columns.tolist():
-        df_merged.rename(columns={'minimum_2m_air_temperature' : 'minimum_2m_air_temperature_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'maximum_2m_air_temperature' in df_merged.columns.tolist():
-        df_merged.rename(columns={'maximum_2m_air_temperature' : 'maximum_2m_air_temperature_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'dewpoint_2m_temperature' in df_merged.columns.tolist():
-        df_merged.rename(columns={'dewpoint_2m_temperature' : 'dewpoint_2m_temperature_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'total_precipitation' in df_merged.columns.tolist():
-        df_merged.rename(columns={'total_precipitation' : 'total_precipitation_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'surface_pressure' in df_merged.columns.tolist():
-        df_merged.rename(columns={'surface_pressure' : 'surface_pressure_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'mean_sea_level_pressure' in df_merged.columns.tolist():
-        df_merged.rename(columns={'mean_sea_level_pressure' : 'mean_sea_level_pressure_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'u_component_of_wind_10m' in df_merged.columns.tolist():
-        df_merged.rename(columns={'u_component_of_wind_10m' : 'u_component_of_wind_10m_' + str(statics)}, inplace = True)
-    else:
-        pass
-    if 'v_component_of_wind_10m' in df_merged.columns.tolist():
-        df_merged.rename(columns={'v_component_of_wind_10m' : 'v_component_of_wind_10m_' + str(statics)}, inplace = True)
-    else:
-        pass
 
-    df_merged.to_csv(session['user_id'] + '/final.csv', index=False)
+    for column_name in df_merged.columns:
+        if column_name in settings.era5_bands_list:
+            _rename_columns(df_merged, column_name, str(statics))
+
+    df_merged.to_csv(user_folder + '/final.csv', index=False)
     
 
 def cbind_Modis_NDVI_EVI(statics):

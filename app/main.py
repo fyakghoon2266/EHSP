@@ -42,6 +42,7 @@ async def index():
 
 	return render_template('Index.html', form=form)
 
+
 @app.route('/Table', methods=['GET', 'POST'])
 def Table():
     form = ProductForm()

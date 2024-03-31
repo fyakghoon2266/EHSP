@@ -1,5 +1,5 @@
 from flask import redirect, url_for, session, Blueprint, send_file
-from models_new import zonal_Chirsp
+from models_new import zonal_Chirsp, zonal_Era5
 
 import shutil
 import logging
@@ -13,6 +13,20 @@ routes_model = Blueprint('routes_model', __name__)
 async def model_chirsp():
 
     zonal_Chirsp()
+
+    result_folder = os.path.join(os.getcwd(), 'result')
+    user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
+
+    if os.path.isfile(user_folder + '/final.csv') == True:
+        return redirect(url_for('routes.routes_product.routes_model.download_file'))
+    else:
+        return('No file exist, Please retry again')
+
+
+@routes_model.route('/model_era5', methods=['GET', 'POST'])
+async def model_era5():
+
+    zonal_Era5()
 
     result_folder = os.path.join(os.getcwd(), 'result')
     user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
