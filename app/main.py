@@ -27,20 +27,20 @@ app.register_blueprint(routes)
 
 @app.route('/', methods=['GET', 'POST'])
 async def index():
-	form = ProductForm()
+    form = ProductForm()
 
-	if request.method == 'POST':
+    if request.method == 'POST':
 
-		if str(form.product_type.data) == str(settings.product_type_list[0]):
-			return redirect(url_for('routes.zonal_index'))
+        if str(form.product_type.data) == str(settings.product_type_list[0]):
+            return redirect(url_for('routes.zonal_index'))
 
-		elif str(form.product_type.data) == str(settings.product_type_list[1]):
-			return redirect(url_for('tiff_raster'))
+        elif str(form.product_type.data) == str(settings.product_type_list[1]):
+            return redirect(url_for('tiff_raster'))
 
-		else:
-			return logger.error('The system has an error on product_type.')
+        else:
+            return logger.error('The system has an error on product_type.')
 
-	return render_template('Index.html', form=form)
+    return render_template('Index.html', form=form)
 
 
 @app.route('/Table', methods=['GET', 'POST'])
@@ -49,7 +49,7 @@ def Table():
     if request.method == 'POST':
 
         return render_template('Index.html')
-    return render_template('Table.html')     
+    return render_template('Table.html')
 
 # @app.teardown_request
 # def teardown_request(exception=None):
@@ -60,5 +60,5 @@ def Table():
 
 
 if __name__ == '__main__':
-  app.debug = True
-  app.run(threaded=True,host="0.0.0.0",port=50000)
+    app.debug = True
+    app.run(threaded=True, host="0.0.0.0", port=50000)

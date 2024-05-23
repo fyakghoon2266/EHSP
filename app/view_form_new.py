@@ -53,7 +53,7 @@ class ProductForm(FlaskForm):
         ]
     )
 
-    modis_ndvi_evi = wtf.SelectMultipleField(
+    modis_ndvi_evi_bands = wtf.SelectMultipleField(
         settings.bands_introduction,
         choices=settings.modis_ndvi_evi_bands_list,
         validators=[
@@ -61,7 +61,7 @@ class ProductForm(FlaskForm):
         ]
     )
 
-    modis_lst = wtf.SelectMultipleField(
+    modis_lst_bands = wtf.SelectMultipleField(
         settings.bands_introduction,
         choices=settings.modis_lst_bands_list,
         validators=[
@@ -69,7 +69,7 @@ class ProductForm(FlaskForm):
         ]
     )
 
-    modis_nadir = wtf.SelectMultipleField(
+    modis_nadir_bands = wtf.SelectMultipleField(
         settings.bands_introduction,
         choices=settings.modis_nadir_bands_list,
         validators=[

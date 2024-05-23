@@ -1,5 +1,5 @@
 from flask import redirect, url_for, session, Blueprint, send_file
-from models_new import zonal_Chirsp, zonal_Era5
+from models_new import zonal_Chirsp, zonal_Era5, zonal_Modis_NDVI_EVI
 
 import shutil
 import logging
@@ -36,6 +36,20 @@ async def model_era5():
     else:
         return('No file exist, Please retry again')
 
+
+@routes_model.route('/model_modis_ndvi_evi', methods=['GET', 'POST'])
+async def model_modis_ndvi_evi():
+
+    zonal_Modis_NDVI_EVI()
+
+    result_folder = os.path.join(os.getcwd(), 'result')
+    user_folder = os.path.join(result_folder, 'user_data', session['user_id'])
+
+    if os.path.isfile(user_folder + '/final.csv') == True:
+        return redirect(url_for('routes.routes_product.routes_model.download_file'))
+    else:
+        return('No file exist, Please retry again')
+    
 
 @routes_model.route('/download_file')
 def download_file():

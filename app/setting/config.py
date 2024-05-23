@@ -19,8 +19,12 @@ class Settings(BaseSettings):
 
     chrisp_bands_list: list = ['precipitation']
     
-    era5_bands_list: list = ['dewpoint_temperature_2m', 
-                            'temperature_2m', 
+    era5_bands_list: list = ['dewpoint_temperature_2m',
+                            'dewpoint_temperature_2m_min',
+                            'dewpoint_temperature_2m_max',
+                            'temperature_2m',
+                            'temperature_2m_min',
+                            'temperature_2m_max',
                             'skin_temperature', 
                             'soil_temperature_level_1', 
                             'soil_temperature_level_2', 
